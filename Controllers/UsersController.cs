@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReservationSystem2022.Middleware;
@@ -6,13 +6,15 @@ using ReservationSystem2022.Models;
 using ReservationSystem2022.Services;
 using System.Security.Claims;
 
-
+namespace ReservationSystem2022.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly ReservationContext _context;
         private readonly IUserService _service;
         private readonly IUserAuthenticationService _authenticationService;
-        private ActionResult<User> user;
 
     public UsersController(ReservationContext context, IUserService service, IUserAuthenticationService authenticationService)
         {
@@ -120,4 +122,5 @@ using System.Security.Claims;
             return _context.Users.Any(e => e.Id == id);
         }
     }
+}
 

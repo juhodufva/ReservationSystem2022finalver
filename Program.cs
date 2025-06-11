@@ -5,7 +5,6 @@ using ReservationSystem2022.Middleware;
 using ReservationSystem2022.Models;
 using ReservationSystem2022.Repositories;
 using ReservationSystem2022.Services;
-using ReservationSystem2022.Services.Midleware;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
