@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ReservationSystem2022.Models;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using NuGet.Configuration;
 
 namespace ReservationSystem2022.Middleware
 {

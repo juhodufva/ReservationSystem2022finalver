@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using ReservationSystem2022.Models;
 using ReservationSystem2022.Repositories;
 using System.Security.Cryptography;
@@ -47,10 +47,7 @@ namespace ReservationSystem2022.Services
             return UserToDTO(newUser);
         }
 
-        Task<Models.UserDTO> IUserService.CreateUserAsync(User user)
-        {
-            throw new NotImplementedException();
-        }
+
 
         private UserDTO UserToDTO(User user)
         {

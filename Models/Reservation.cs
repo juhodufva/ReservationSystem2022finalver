@@ -1,6 +1,3 @@
-﻿using ReservationSystem2022.Controllers;
-
-
 namespace ReservationSystem2022.Models
 {
     public class Reservation

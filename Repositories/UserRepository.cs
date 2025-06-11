@@ -1,4 +1,4 @@
-﻿using ReservationSystem2022.Controllers;
+using Microsoft.EntityFrameworkCore;
 using ReservationSystem2022.Models;
 
 namespace ReservationSystem2022.Repositories
@@ -29,8 +29,7 @@ namespace ReservationSystem2022.Repositories
 
         public async Task<User> GetUserAsync(string userName)
         {
-            User user = _context.Users.Where(x => x.UserName == userName).FirstOrDefault();
-            return user;
+            return await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
         }
     }
 }

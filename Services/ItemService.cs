@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ReservationSystem2022.Controllers;
 using ReservationSystem2022.Models;
 using ReservationSystem2022.Repositories;
-using Microsoft.JSInterop.Infrastructure;
 
 namespace ReservationSystem2022.Services
 {

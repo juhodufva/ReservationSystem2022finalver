@@ -1,4 +1,4 @@
-﻿namespace ReservationSystem2022.Services.Midleware
+namespace ReservationSystem2022.Middleware
 {
     public class ApiKeyMiddleware
     {

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ReservationSystem2022.Controllers;
 using ReservationSystem2022.Models;
 
 namespace ReservationSystem2022.Models
