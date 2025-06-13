@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using ReservationSystem2022.Middleware;
 using ReservationSystem2022.Models;
 using ReservationSystem2022.Repositories;
 using ReservationSystem2022.Services;
@@ -21,14 +20,12 @@ builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
-
-
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
         Title = "Reservation API",
-        Description = "An ASP.NET Core Web API for managing ToDo items items can be reserved by ",
+        Description = "An ASP.NET Core Web API for managing items",
         TermsOfService = new Uri("https://example.com/terms"),
         Contact = new OpenApiContact
         {
@@ -42,34 +39,9 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
-    // Add API key support to swagger
-    options.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
-    {
-        Description = "API Key required to access the endpoints. Example: `INNINLNNINIB`",
-        Type = SecuritySchemeType.ApiKey,
-        Name = "ApiKey",
-        In = ParameterLocation.Header,
-        Scheme = "ApiKeyScheme"
-    });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "ApiKey"
-                }
-            },
-            new List<string>()
-        }
-    });
-
-    // using System.Reflection;
+    // XML comments configuration (optional)
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    //options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+    // options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 
 });
 
@@ -90,11 +62,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseMiddleware<ApiKeyMiddleware>();
-
-
-app.UseAuthorization();
 
 app.MapControllers();
 
