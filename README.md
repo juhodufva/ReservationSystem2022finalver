@@ -8,8 +8,8 @@ Build and run the application with `dotnet run`. The API listens on the configur
 
 ## API Key
 
-All endpoints are protected by the `ApiKeyMiddleware`. Each request must include the header `ApiKey` with the value configured in `appsettings.json`.
 When using Swagger UI, this header is automatically included in the generated curl commands.
+
 
 Example `appsettings.json` snippet:
 
