@@ -6,12 +6,17 @@ using ReservationSystem2022.Models;
 using ReservationSystem2022.Repositories;
 using ReservationSystem2022.Services;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ReservationContext>(opt =>
-    opt.UseSqlite("Data Source=reservation.db"));builder.Services.AddControllers();
+    opt.UseSqlite("Data Source=reservation.db"));
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
