@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ReservationSystem2022.Middleware;
 using ReservationSystem2022.Models;
+using ReservationSystem2022.Filters;
 using ReservationSystem2022.Repositories;
 using ReservationSystem2022.Services;
 using System.Collections.Generic;
@@ -66,6 +67,8 @@ builder.Services.AddSwaggerGen(options =>
             new List<string>()
         }
     });
+
+    options.OperationFilter<ApiKeyHeaderOperationFilter>(builder.Configuration.GetValue<string>("ApiKey"));
 
     // using System.Reflection;
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
