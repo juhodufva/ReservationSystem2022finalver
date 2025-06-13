@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ReservationSystem2022.Models;
+using Microsoft.Data.Sqlite;
 using ReservationSystem2022.Repositories;
 using ReservationSystem2022.Services;
 using System.Collections.Generic;
@@ -47,10 +48,32 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+// Ensure database schema exists, even if an old database file is missing tables
 using (var scope = app.Services.CreateScope())
 {
-    ReservationContext dbcontext = scope.ServiceProvider.GetRequiredService<ReservationContext>();
+    var dbcontext = scope.ServiceProvider.GetRequiredService<ReservationContext>();
+
+    // create DB if it does not exist
     dbcontext.Database.EnsureCreated();
+
+    // verify the Items table exists; if not, recreate the database
+    var conn = dbcontext.Database.GetDbConnection();
+    conn.Open();
+    try
+    {
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='Items'";
+        var count = Convert.ToInt32(cmd.ExecuteScalar());
+        if (count == 0)
+        {
+            dbcontext.Database.EnsureDeleted();
+            dbcontext.Database.EnsureCreated();
+        }
+    }
+    finally
+    {
+        conn.Close();
+    }
 }
 
 

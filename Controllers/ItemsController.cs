@@ -21,6 +21,10 @@ namespace ReservationSystem2022.Controllers
         {
             _context = context;
             _service = service;
+            // Ensure the SQLite database and tables are created. Without this
+            // the first request may fail if the database file exists but the
+            // schema has not been initialized.
+            _context.Database.EnsureCreated();
         }
 
         // GET: api/Items
@@ -30,23 +34,22 @@ namespace ReservationSystem2022.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Item>>> GetItems()
+        public async Task<ActionResult<IEnumerable<ItemDTO>>> GetItems()
         {
-            return await _context.Items.ToListAsync();
+            var items = await _service.GetItemsAsync();
+            return Ok(items);
         }
 
         // GET: api/Items/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Item>> GetItem(long id)
+        public async Task<ActionResult<ItemDTO>> GetItem(long id)
         {
-            var item = await _context.Items.FindAsync(id);
-
+            var item = await _service.GetItemAsync(id);
             if (item == null)
             {
                 return NotFound();
             }
-
-            return item;
+            return Ok(item);
         }
 
         // PUT: api/Items/5
