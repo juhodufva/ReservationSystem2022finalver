@@ -1,6 +1,27 @@
 # Reservation System API
 
 
+# Project Startup
+Open the project folder in the terminal:
+1.
+cd ReservationSystem2022finalver
+2.
+Build the project:
+dotnet build
+3.
+Run the application:
+dotnet run
+4.
+Open a browser and go to:
+https://localhost:7036/swagger
+
+If you encounter the error:
+"The process cannot access the file 'reservation.db' because it is being used by another process."
+Reason:
+When starting, the program tries to delete the database file reservation.db, but another process (or program) is using it at that moment.
+Try:
+"Remove-Item .\reservation.db"
+
 ## Running
 
 Build and run the application with `dotnet run`. The API listens on the configured HTTPS port.
