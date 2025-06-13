@@ -5,6 +5,8 @@
 
 Build and run the application with `dotnet run`. The API listens on the configured HTTPS port.
 
+On startup the application checks that the SQLite database schema exists and recreates it if necessary, so GET requests work even if the database file is missing tables.
+
 
 ## Item endpoints
 

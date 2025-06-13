@@ -29,7 +29,7 @@ namespace ReservationSystem2022.Services
             return await _repository.DeleteItemAsync(oldItem);
         }
 
-        public async Task<ItemDTO> GetItemAsync(long id)  // !!!!!!!!!!!!!!!!
+        public async Task<ItemDTO> GetItemAsync(long id)
         {
             Item item = await _repository.GetItemAsync(id);
 
@@ -44,7 +44,7 @@ namespace ReservationSystem2022.Services
             return null;
         }
 
-        public async Task<IEnumerable<ItemDTO>> GetItemsAsync()    //!!!!!!!!!!
+        public async Task<IEnumerable<ItemDTO>> GetItemsAsync()
         {
             IEnumerable<Item> items = await _repository.GetItemsAsync();
             List<ItemDTO> result = new List<ItemDTO>();
