@@ -1,11 +1,12 @@
 # Reservation System API
 
+
 This simple ASP.NET Core API exposes item endpoints. All authentication has been removed so requests do not require an API key.
+
 
 ## Running
 
 Build and run the application with `dotnet run`. The API listens on the configured HTTPS port.
-
 
 ## Item endpoints
 
