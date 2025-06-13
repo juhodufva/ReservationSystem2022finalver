@@ -47,7 +47,7 @@ namespace ReservationSystem2022.Middleware
         public async Task<bool> IsAllowed(string username, ItemDTO item)
         {
             User? user = await _context.Users.Where(x => x.UserName == username).FirstOrDefaultAsync();
-            Item? dbItem = await _context.Items.Include(i => i.Owner).FirstOrDefaultAsync(i => i.Id == item.Id);
+            Item? dbItem = await _context.Items.FirstOrDefaultAsync(i => i.Id == item.Id);
 
             if (user == null)
             {
@@ -61,7 +61,7 @@ namespace ReservationSystem2022.Middleware
             {
                 return false;
             }
-            if (user.Id == dbItem.Owner.Id)
+            if (dbItem.Owner != null && user.UserName == dbItem.Owner)
             {
                 return true;
             }
