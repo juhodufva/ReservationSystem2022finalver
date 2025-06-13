@@ -7,7 +7,7 @@ namespace ReservationSystem2022.Models
         public long Id { get; set; }
         public String Name { get; set; }
         public String? Description { get; set; }
-        public virtual User? Owner { get; set; }
+        public string? Owner { get; set; }
         public virtual List<Image> Images { get; set; }
         public long accessCount { get; set; } //sisäinen kenttä 
 
@@ -21,7 +21,7 @@ namespace ReservationSystem2022.Models
         public String Name { get; set; }
         public String? Description { get; set; }
         [Required]
-        public String Owner { get; set; }
+        public string Owner { get; set; }
 
         public virtual List<ImageDTO>? Images { get; set; }
 
