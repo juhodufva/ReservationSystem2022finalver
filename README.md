@@ -1,6 +1,5 @@
 # Reservation System API
 
-This simple ASP.NET Core API exposes item endpoints. All authentication has been removed so requests do not require an API key.
 
 ## Running
 
