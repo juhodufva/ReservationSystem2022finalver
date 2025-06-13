@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using ReservationSystem2022.Controllers;
 using ReservationSystem2022.Models;
 using ReservationSystem2022.Repositories;
 
@@ -8,16 +6,14 @@ namespace ReservationSystem2022.Services
     public class ItemService : IItemService
     {
         private readonly IItemRepository _repository;
-        private readonly IUserRepository _userRepository;
 
-        public ItemService(IItemRepository repository, IUserRepository userRepository)
+        public ItemService(IItemRepository repository)
         {
             _repository = repository;
-            _userRepository = userRepository;
         }
         public async Task<ItemDTO> CreateItemAsync(ItemDTO dto)
         {
-            Item newItem = await DTOToItem(dto);
+            Item newItem = DTOToItem(dto);
             await _repository.AddItemAsync(newItem);
             return ItemToDTO(newItem);
         }
@@ -102,34 +98,13 @@ namespace ReservationSystem2022.Services
             return itemDTOs;
         }
 
-        public async Task<IEnumerable<ItemDTO>> GetItemsAsync(string username)
-        {
-            User owner = await _userRepository.GetUserAsync(username);
-            if (owner == null)
-            {
-                return null;
-            }
-            IEnumerable<Item> items = await _repository.GetItemsAsync(owner);
-            List<ItemDTO> itemDTOs = new List<ItemDTO>();
-            foreach (Item i in items)
-            {
-                itemDTOs.Add(ItemToDTO(i));
-            }
-            return itemDTOs;
-        }
-        private async Task<Item> DTOToItem(ItemDTO dto)
+
+        private Item DTOToItem(ItemDTO dto)
         {
             Item newItem = new Item();
             newItem.Name = dto.Name;
             newItem.Description = dto.Description;
-
-            //Hae omistaja kannasta
-            User owner = await _userRepository.GetUserAsync(dto.Owner);
-
-            if (owner != null)
-            {
-                newItem.Owner = owner;
-            }
+            newItem.Owner = dto.Owner;
             if (dto.Images != null)
             {
                 newItem.Images = new List<Image>();
@@ -159,10 +134,7 @@ namespace ReservationSystem2022.Services
                 }
             }
 
-            if (item.Owner != null)
-            {
-                dto.Owner = item.Owner.UserName;
-            }
+            dto.Owner = item.Owner;
 
             return dto;
         }

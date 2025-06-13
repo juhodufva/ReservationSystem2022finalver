@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ReservationSystem2022.Middleware;
 using ReservationSystem2022.Models;
+using ReservationSystem2022.Filters;
 using ReservationSystem2022.Repositories;
 using ReservationSystem2022.Services;
 using System.Collections.Generic;
-using ReservationSystem2022.Repositories;
-using ReservationSystem2022.Services;
 using System.Text.Json.Serialization;
 using System.Reflection;
 
@@ -20,14 +18,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
-builder.Services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IReservationService, ReservationService>();
-builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
-builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 
@@ -76,6 +68,8 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
+    options.OperationFilter<ApiKeyHeaderOperationFilter>(builder.Configuration.GetValue<string>("ApiKey"));
+
     // using System.Reflection;
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     //options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
@@ -102,7 +96,6 @@ app.UseHttpsRedirection();
 
 app.UseMiddleware<ApiKeyMiddleware>();
 
-app.UseAuthentication();
 
 app.UseAuthorization();
 
